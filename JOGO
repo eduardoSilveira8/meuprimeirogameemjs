@@ -2,22 +2,18 @@
 <html>
 <canvas id="game" width="900" height="650"></canvas>
 <script>
-// Obtém o canvas do jogo
 var canvas = document.getElementById("game");
 var ctx = canvas.getContext("2d");
 
-// Coordenadas iniciais da bola
 var x = 150;
 var y = 150;
 
-// Velocidade da bola
 var vx = 5;
 var vy = 5;
 
-// Cor da bola
+
 var ballColor = "#0095DD";
 
-// Desenha a bola
 function drawBall() {
   ctx.beginPath();
   ctx.arc(x, y, 10, 0, Math.PI * 2);
@@ -26,19 +22,15 @@ function drawBall() {
   ctx.closePath();
 }
 
-// Atualiza a posição da bola
 function update() {
   // Limpa o canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Desenha a bola
   drawBall();
 
-  // Atualiza a posição da bola
   x += vx;
   y += vy;
 
-  // Verifica se a bola saiu da tela
   if (x > canvas.width || x < 0) {
     vx = -vx;
   }
@@ -46,19 +38,13 @@ function update() {
     vy = -vy;
   }
 
-  // Chama a função update novamente
   requestAnimationFrame(update);
 }
 
-// Inicia o jogo
 update();
-
-// Adiciona evento de toque ao canvas
 canvas.addEventListener("touchstart", changeDirectionAndColor);
 canvas.addEventListener("mousedown", changeDirectionAndColor);
 
-
-// Função para mudar a direção e cor da bola
 function changeDirectionAndColor(event) {
 	console.log("Evento detectado");
   var touch = event.changedTouches;
