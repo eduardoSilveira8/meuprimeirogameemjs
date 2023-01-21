@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<canvas id="game" width="900" height="650"></canvas>
+<script>
+// Obtém o canvas do jogo
+var canvas = document.getElementById("game");
+var ctx = canvas.getContext("2d");
+
+// Coordenadas iniciais da bola
+var x = 150;
+var y = 150;
+
+// Velocidade da bola
+var vx = 5;
+var vy = 5;
+
+// Cor da bola
+var ballColor = "#0095DD";
+
+// Desenha a bola
+function drawBall() {
+  ctx.beginPath();
+  ctx.arc(x, y, 10, 0, Math.PI * 2);
+  ctx.fillStyle = ballColor;
+  ctx.fill();
+  ctx.closePath();
+}
+
+// Atualiza a posição da bola
+function update() {
+  // Limpa o canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Desenha a bola
+  drawBall();
+
+  // Atualiza a posição da bola
+  x += vx;
+  y += vy;
+
+  // Verifica se a bola saiu da tela
+  if (x > canvas.width || x < 0) {
+    vx = -vx;
+  }
+  if (y > canvas.height || y < 0) {
+    vy = -vy;
+  }
+
+  // Chama a função update novamente
+  requestAnimationFrame(update);
+}
+
+// Inicia o jogo
+update();
+
+// Adiciona evento de toque ao canvas
+canvas.addEventListener("touchstart", changeDirectionAndColor);
+canvas.addEventListener("mousedown", changeDirectionAndColor);
+
+
+// Função para mudar a direção e cor da bola
+function changeDirectionAndColor(event) {
+	console.log("Evento detectado");
+  var touch = event.changedTouches;
+  var rect = canvas.getBoundingClientRect();
+  var x = event.pageX - rect.left;
+var y = event.pageY - rect.top;
+
+  if((x > x - 10 && x < x + 10) && (y > y - 10 && y < y + 10)) {
+
+    vx = -vx;
+    vy = -vy;
+    ballColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+  }
+}
+</script>
+</html>
